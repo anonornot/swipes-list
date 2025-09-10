@@ -1,0 +1,86 @@
+#greeting-list-container {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+    background-color: transparent;
+    border-radius: 15px;
+    box-shadow: 0;
+    display: flex;
+    align-items: center;
+}
+
+#greeting-list-select {
+    padding-block: 6px;
+	padding-inline: 10px;
+    width: 400px;
+    background-color: rgba(0,0,0,0.2);
+    border: 2px solid gray;
+    margin-bottom: 0px;
+    border-radius: 15px;
+}
+
+#greeting-list-refresh {
+    padding: 5px;
+    width:35px;
+    height:35px;
+    background-color: rgba(0,0,0,0.5);
+    border: 2px solid gray;
+    border-radius: 55px;
+    color: white;
+    cursor: pointer;
+}
+
+#greeting-list-container-drag {
+    font-size: 1.2em;
+    left: -10px;
+    z-index: 35;
+    position: relative;
+    cursor: grabbing;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#greeting-list-container-drag .drag-grabber {
+    display: flex !important;
+    position: relative !important;
+    margin: auto;
+}
+
+#greeting-list-hide {
+    left: -20px;
+    background-color: unset;
+    border: 0px;
+    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    z-index: 30;
+}
+
+#greeting-list-hide:hover {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 10px;
+}
+
+#greeting-list-toggle {
+    animation: show 1s forwards;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes show {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100%;
+        visibility: visible;
+    }
+}

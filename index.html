@@ -1,0 +1,65 @@
+<div id="greeting-list-container">
+    <button id="greeting-list-hide"><i class="fa-solid fa-eye-slash"></i></button>
+    <div id="greeting-list-container-drag"><i class="fa-solid fa-grip drag-grabber"></i></div>
+    <div id="greeting-list-toggle">
+        <div style="display: flex; align-items: center; gap: 5px;">
+            <select id="greeting-list-select">
+                <option value="-1">Loading greetings...</option>
+            </select>
+            <button id="greeting-list-refresh">
+                <i class="fa fa-refresh"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script id="draggableUI">
+    /* --- Draggable --- */
+
+    dragElement(document.getElementById("greeting-list-container"));
+
+    function dragElement(elmnt) {
+      var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      
+      // Make the element position:absolute for dragging
+      elmnt.style.position = 'absolute';
+      
+      if (document.getElementById(elmnt.id + "-drag")) {
+        document.getElementById(elmnt.id + "-drag").onmousedown = dragMouseDown;
+      } else {
+        elmnt.onmousedown = dragMouseDown;
+      }
+
+      function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // Store initial mouse position
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // Store initial element position
+        pos1 = elmnt.offsetLeft;
+        pos2 = elmnt.offsetTop;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        
+        // Calculate the new position based on mouse movement
+        var newLeft = pos1 + (e.clientX - pos3);
+        var newTop = pos2 + (e.clientY - pos4);
+        
+        // Apply the new position
+        elmnt.style.left = newLeft + "px";
+        elmnt.style.top = newTop + "px";
+        elmnt.style.right = "auto"; // Reset right positioning
+      }
+
+      function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    }
+</script>

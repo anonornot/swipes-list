@@ -1,0 +1,11 @@
+{
+    "display_name": "Greeting List",
+    "loading_order": 9,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "anonymous",
+    "version": "1.0.0",
+    "homePage": ""
+}
