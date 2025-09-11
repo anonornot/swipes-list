@@ -13,5 +13,5 @@ Or just download it through extensions tab.
 
 ## What does it do
 
-Populates the dropdown list UI with the loaded swipes and adds buttons to switch to that swipe. So it's technically a swipe list, but I'm too lazy to change the name and everything so let's call it greeting list.
+Populates the dropdown list with the loaded swipes and adds buttons to switch to that swipe.
 
