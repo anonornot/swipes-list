@@ -9,7 +9,7 @@ const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
 const extensionSettings = extension_settings[extensionName];
 const defaultSettings = {};
 
-async function populateGreetingsDropdown() {
+async function populateSwipeDropdown() {
     try {
         const countResult = await executeSlashCommandsWithOptions('/swipes-count');
         const swipesCount = countResult.pipe;
@@ -26,13 +26,13 @@ async function populateGreetingsDropdown() {
             text: 'Select a swipe...'
         }));
         
-        // Fetch each greeting and add to dropdown
+        // Fetch each swipe and add to dropdown
         for (let i = 0; i < swipesCount; i++) {
-            const greetingResult = await executeSlashCommandsWithOptions(`/swipes-get ${i}`);
-            const greetingText = greetingResult.pipe || greetingResult;
+            const swipeResult = await executeSlashCommandsWithOptions(`/swipes-get ${i}`);
+            const swipeText = swipeResult.pipe || swipeResult;
             
-            // Get a suitable title from the greeting text
-            let title = createGreetingTitle(greetingText);
+            // Get a suitable title from the swipe text
+            let title = createSwipeTitle(swipeText);
             
             $('#swipes-list-select').append($('<option>', {
                 value: i,
@@ -44,7 +44,7 @@ async function populateGreetingsDropdown() {
     }
 }
 
-function createGreetingTitle(text) {
+function createSwipeTitle(text) {
     if (!text) return "Empty swipe";
     
     const sentenceMatch = text.match(/^[^.!?]*[.!?]/);
@@ -62,7 +62,7 @@ function createGreetingTitle(text) {
     return truncated.trim() + '...';
 }
 
-function handleGreetingSelection() {
+function handleSwipeSelection() {
     const selectedIndex = $('#swipes-list-select').val();
     if (selectedIndex >= 0) {
         executeSlashCommandsWithOptions(`/swipes-go ${selectedIndex}`);
@@ -80,8 +80,8 @@ jQuery(async () => {
         const htmlTemplate = await $.get(`${extensionFolderPath}/index.html`);
         $("body").append(htmlTemplate);
 
-        $('#swipes-list-select').on('change', handleGreetingSelection);
-        $('#swipes-list-refresh').on('click', populateGreetingsDropdown);
+        $('#swipes-list-select').on('change', handleSwipeSelection);
+        $('#swipes-list-refresh').on('click', populateSwipeDropdown);
         $('#swipes-list-hide').on('click', hide);
 
     } catch (error) {
