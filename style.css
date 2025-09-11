@@ -1,4 +1,4 @@
-#greeting-list-container {
+#swipes-list-container {
     position: fixed;
     top: 100px;
     right: 20px;
@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-#greeting-list-select {
+#swipes-list-select {
     padding-block: 6px;
 	padding-inline: 10px;
     width: 400px;
@@ -20,7 +20,7 @@
     border-radius: 15px;
 }
 
-#greeting-list-refresh {
+#swipes-list-refresh {
     padding: 5px;
     width:35px;
     height:35px;
@@ -31,7 +31,7 @@
     cursor: pointer;
 }
 
-#greeting-list-container-drag {
+#swipes-list-container-drag {
     font-size: 1.2em;
     left: -10px;
     z-index: 35;
@@ -40,13 +40,13 @@
     color: rgba(255, 255, 255, 0.3);
 }
 
-#greeting-list-container-drag .drag-grabber {
+#swipes-list-container-drag .drag-grabber {
     display: flex !important;
     position: relative !important;
     margin: auto;
 }
 
-#greeting-list-hide {
+#swipes-list-hide {
     left: -20px;
     background-color: unset;
     border: 0px;
@@ -62,12 +62,12 @@
     z-index: 30;
 }
 
-#greeting-list-hide:hover {
+#swipes-list-hide:hover {
     background-color: rgba(255,255,255,0.3);
     border-radius: 10px;
 }
 
-#greeting-list-toggle {
+#swipes-list-toggle {
     animation: show 1s forwards;
     animation-duration: 0.2s;
     animation-fill-mode: forwards;
