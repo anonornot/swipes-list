@@ -1,4 +1,4 @@
-## **SillyTavern Greeting List Extension**
+## **Swipe List**
 
 
 ## Installation
