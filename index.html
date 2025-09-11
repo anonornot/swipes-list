@@ -1,12 +1,12 @@
-<div id="greeting-list-container">
-    <button id="greeting-list-hide"><i class="fa-solid fa-eye-slash"></i></button>
-    <div id="greeting-list-container-drag"><i class="fa-solid fa-grip drag-grabber"></i></div>
-    <div id="greeting-list-toggle">
+<div id="swipes-list-container">
+    <button id="swipes-list-hide"><i class="fa-solid fa-eye-slash"></i></button>
+    <div id="swipes-list-container-drag"><i class="fa-solid fa-grip drag-grabber"></i></div>
+    <div id="swipes-list-toggle">
         <div style="display: flex; align-items: center; gap: 5px;">
-            <select id="greeting-list-select">
-                <option value="-1">Loading greetings...</option>
+            <select id="swipes-list-select">
+                <option value="-1">Loading swipes...</option>
             </select>
-            <button id="greeting-list-refresh">
+            <button id="swipes-list-refresh">
                 <i class="fa fa-refresh"></i>
             </button>
         </div>
@@ -16,7 +16,7 @@
 <script id="draggableUI">
     /* --- Draggable --- */
 
-    dragElement(document.getElementById("greeting-list-container"));
+    dragElement(document.getElementById("swipes-list-container"));
 
     function dragElement(elmnt) {
       var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
