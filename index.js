@@ -4,7 +4,7 @@ const {
 
 import { extension_settings } from '../../../extensions.js';
 
-const extensionName = "greeting-list";
+const extensionName = "swipes-list";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
 const extensionSettings = extension_settings[extensionName];
 const defaultSettings = {};
@@ -19,11 +19,11 @@ async function populateGreetingsDropdown() {
             return;
         }
 
-        $('#greeting-list-select').empty();
+        $('#swipes-list-select').empty();
 
-        $('#greeting-list-select').append($('<option>', {
+        $('#swipes-list-select').append($('<option>', {
             value: -1,
-            text: 'Select a greeting...'
+            text: 'Select a swipe...'
         }));
         
         // Fetch each greeting and add to dropdown
@@ -34,18 +34,18 @@ async function populateGreetingsDropdown() {
             // Get a suitable title from the greeting text
             let title = createGreetingTitle(greetingText);
             
-            $('#greeting-list-select').append($('<option>', {
+            $('#swipes-list-select').append($('<option>', {
                 value: i,
                 text: `${i+1}: ${title}`
             }));
         }
     } catch (error) {
-        console.error('Error populating greetings dropdown:', error);
+        console.error('Error populating swipe dropdown:', error);
     }
 }
 
 function createGreetingTitle(text) {
-    if (!text) return "Empty greeting";
+    if (!text) return "Empty swipe";
     
     const sentenceMatch = text.match(/^[^.!?]*[.!?]/);
     if (sentenceMatch && sentenceMatch[0].length <= 60) {
@@ -63,14 +63,14 @@ function createGreetingTitle(text) {
 }
 
 function handleGreetingSelection() {
-    const selectedIndex = $('#greeting-list-select').val();
+    const selectedIndex = $('#swipes-list-select').val();
     if (selectedIndex >= 0) {
         executeSlashCommandsWithOptions(`/swipes-go ${selectedIndex}`);
     }
 }
 
 function hide(){
-    var box = document.querySelector("#greeting-list-toggle");
+    var box = document.querySelector("#swipes-list-toggle");
     if (box.style.animationName == "hide") { box.style.animationName = "show"; box.classList.remove("show"); }
     else { box.style.animationName = "hide"; box.classList.add("show"); }
 }
@@ -80,12 +80,12 @@ jQuery(async () => {
         const htmlTemplate = await $.get(`${extensionFolderPath}/index.html`);
         $("body").append(htmlTemplate);
 
-        $('#greeting-list-select').on('change', handleGreetingSelection);
-        $('#greeting-list-refresh').on('click', populateGreetingsDropdown);
-        $('#greeting-list-hide').on('click', hide);
+        $('#swipes-list-select').on('change', handleGreetingSelection);
+        $('#swipes-list-refresh').on('click', populateGreetingsDropdown);
+        $('#swipes-list-hide').on('click', hide);
 
     } catch (error) {
-        console.error('Error initializing Greeting List extension:', error);
+        console.error('Error initializing Swipe List extension:', error);
     }
 });
 
