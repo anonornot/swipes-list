@@ -6,13 +6,13 @@ ___
 Populates the dropdown list with the loaded swipes and adds buttons to switch to that swipe.
 
 
-### Installation
+### Requirements
 ___
-Download and move this file into SillyTavern's `~\SillyTavern\data\default-user\extensions` directory.
 
-Or just download it through extensions tab.
+[LaLib Extension](https://github.com/LenAnderson/SillyTavern-LALib)
 
-Requirement: [LaLib Extension](https://github.com/LenAnderson/SillyTavern-LALib)
+### Preview
+___
 
 ![](https://files.catbox.moe/bccthg.png)
 
