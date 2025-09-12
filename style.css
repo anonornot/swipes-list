@@ -21,3 +21,7 @@
 .last_mes #swipes-list-container {
     display: flex;
 }
+
+.last_mes .mes_text {
+    padding-bottom: 25px !important;
+}
