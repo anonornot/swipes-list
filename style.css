@@ -1,98 +1,23 @@
 #swipes-list-container {
-    position: fixed;
-    top: 100px;
-    right: 20px;
     z-index: 1000;
     background-color: transparent;
     border-radius: 15px;
-    box-shadow: 0;
-    display: flex;
-    align-items: center;
+
+    display: none;
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 200px;
 }
 
 #swipes-list-select {
     padding-block: 6px;
 	padding-inline: 10px;
-    width: 400px;
     background-color: rgba(0,0,0,0.2);
-    border: 2px solid gray;
-    margin-bottom: 0px;
-    border-radius: 15px;
+    border-radius: 5px;
+    width: 100%;
 }
 
-#swipes-list-refresh {
-    padding: 5px;
-    width:35px;
-    height:35px;
-    background-color: rgba(0,0,0,0.5);
-    border: 2px solid gray;
-    border-radius: 55px;
-    color: white;
-    cursor: pointer;
-}
-
-#swipes-list-container-drag {
-    font-size: 1.2em;
-    left: -10px;
-    z-index: 35;
-    position: relative;
-    cursor: grabbing;
-    color: rgba(255, 255, 255, 0.3);
-}
-
-#swipes-list-container-drag .drag-grabber {
-    display: flex !important;
-    position: relative !important;
-    margin: auto;
-}
-
-#swipes-list-hide {
-    left: -20px;
-    background-color: unset;
-    border: 0px;
-    border-radius: 10px;
-    width: 30px;
-    height: 30px;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
+.last_mes #swipes-list-container {
     display: flex;
-    cursor: pointer;
-    position: relative;
-    z-index: 30;
-}
-
-#swipes-list-hide:hover {
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 10px;
-}
-
-#swipes-list-toggle {
-    animation: show 1s forwards;
-    animation-duration: 0.2s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes show {
-    0% {
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 100%;
-        visibility: visible;
-    }
-}
-
-@keyframes hide {
-    0% {
-        opacity: 100%;
-        visibility: visible;
-    }
-
-    100% {
-        opacity: 0;
-        visibility: hidden;
-    }
 }

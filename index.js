@@ -2,6 +2,9 @@ const {
     executeSlashCommandsWithOptions,
 } = SillyTavern.getContext();
 
+const COOLDOWN_MS = 2000; // 2 seconds; adjust as needed
+let lastPopulateTime = 0; // Tracks the last successful execution time
+
 import { extension_settings } from '../../../extensions.js';
 
 const extensionName = "swipes-list";
@@ -10,6 +13,13 @@ const extensionSettings = extension_settings[extensionName];
 const defaultSettings = {};
 
 async function populateSwipeDropdown() {
+    const now = Date.now();
+    if (now - lastPopulateTime < COOLDOWN_MS) {
+        console.log('Cooldown active, skipping populateSwipeDropdown');
+        return;
+    }
+    lastPopulateTime = now; // Update timestamp only if we proceed
+
     try {
         const countResult = await executeSlashCommandsWithOptions('/swipes-count');
         const swipesCount = countResult.pipe;
@@ -19,9 +29,9 @@ async function populateSwipeDropdown() {
             return;
         }
 
-        $('#swipes-list-select').empty();
+        $('.last_mes #swipes-list-select').empty();
 
-        $('#swipes-list-select').append($('<option>', {
+        $('.last_mes #swipes-list-select').append($('<option>', {
             value: -1,
             text: 'Select a swipe...'
         }));
@@ -34,7 +44,7 @@ async function populateSwipeDropdown() {
             // Get a suitable title from the swipe text
             let title = createSwipeTitle(swipeText);
             
-            $('#swipes-list-select').append($('<option>', {
+            $('.last_mes #swipes-list-select').append($('<option>', {
                 value: i,
                 text: `${i+1}: ${title}`
             }));
@@ -63,29 +73,21 @@ function createSwipeTitle(text) {
 }
 
 function handleSwipeSelection() {
-    const selectedIndex = $('#swipes-list-select').val();
+    const selectedIndex = $('.last_mes #swipes-list-select').val();
     if (selectedIndex >= 0) {
         executeSlashCommandsWithOptions(`/swipes-go ${selectedIndex}`);
     }
 }
 
-function hide(){
-    var box = document.querySelector("#swipes-list-toggle");
-    if (box.style.animationName == "hide") { box.style.animationName = "show"; box.classList.remove("show"); }
-    else { box.style.animationName = "hide"; box.classList.add("show"); }
-}
-
 jQuery(async () => {
     try {
         const htmlTemplate = await $.get(`${extensionFolderPath}/index.html`);
-        $("body").append(htmlTemplate);
+        $(".swipeRightBlock").append(htmlTemplate);
 
-        $('#swipes-list-select').on('change', handleSwipeSelection);
-        $('#swipes-list-refresh').on('click', populateSwipeDropdown);
-        $('#swipes-list-hide').on('click', hide);
+        $(document.body).on('change', '#swipes-list-select', handleSwipeSelection);
+        $(document.body).on('click', '#swipes-list-select', populateSwipeDropdown);
 
     } catch (error) {
         console.error('Error initializing Swipe List extension:', error);
     }
 });
-
