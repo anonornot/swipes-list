@@ -14,5 +14,7 @@ Or just download it through extensions tab.
 
 Requirement: [LaLib Extension](https://github.com/LenAnderson/SillyTavern-LALib)
 
+![](https://files.catbox.moe/bccthg.png)
+
 
 
