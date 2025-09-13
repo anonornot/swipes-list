@@ -1,3 +1,14 @@
+:root {
+    --swipe-show-first: none;
+    --swipe-show-last: none;
+    --swipe-show-every: none;
+
+    --swipe-pad-first: 5px;
+    --swipe-pad-last: 5px;
+    --swipe-pad-every: 5px;
+}
+
+
 #swipes-list-container {
     z-index: 1000;
     background-color: transparent;
@@ -17,3 +28,13 @@
     border-radius: 5px;
     width: 100%;
 }
+
+.mes[mesid="0"][is_user="false"] #swipes-list-container { display: var(--swipe-show-first) !important; }
+.mes[mesid="0"][is_user="false"] .mes_text { padding-bottom: var(--swipe-pad-first) !important; }
+
+
+.last_mes[is_user="false"] #swipes-list-container { display: var(--swipe-show-last) !important; }
+.last_mes[is_user="false"] .mes_text { padding-bottom: var(--swipe-pad-last) !important; }
+
+.mes[is_user="false"] #swipes-list-container { display: var(--swipe-show-every) }
+.mes[is_user="false"] .mes_text { padding-bottom: var(--swipe-pad-every) }

@@ -100,11 +100,9 @@ function handleSwipeSelection(target) {
 }
 
 function toggleSwipes(checked, className) {
-    const container = $(`${className} #swipes-list-container`);
-    container.css('display', checked ? 'flex' : 'none');
-
-    const mes = $(`${className} .mes_text`);
-    mes.css('padding-bottom', checked ? '35px' : 'none');
+    const root = document.documentElement;
+    root.style.setProperty(`--swipe-show-${className}`, checked ? 'flex' : 'none');
+    root.style.setProperty(`--swipe-pad-${className}`, checked ? '35px' : '5px');
 }
 
 jQuery(async () => {
@@ -117,9 +115,9 @@ jQuery(async () => {
 
         $(document.body).on('change', '#swipes-list-select', function(e) { handleSwipeSelection(e.currentTarget); });
         $(document.body).on('click', '#swipes-list-select', function(e) { populateSwipeDropdown(e.currentTarget); });
-        $(document.body).on('change', '#swipes-show-firstmes', function() { toggleSwipes(this.checked, '.mes[mesid="0"]'); });
-        $(document.body).on('change', '#swipes-show-lastmes', function() { toggleSwipes(this.checked, '.last_mes'); });
-        $(document.body).on('change', '#swipes-show-everymes', function() { toggleSwipes(this.checked, ''); });
+        $(document.body).on('change', '#checkbox-firstmes', function() { toggleSwipes(this.checked, 'first'); });
+        $(document.body).on('change', '#checkbox-lastmes', function() { toggleSwipes(this.checked, 'last'); });
+        $(document.body).on('change', '#checkbox-everymes', function() { toggleSwipes(this.checked, 'every'); });
     } catch (error) {
         console.error('Error initializing Swipe List extension:', error);
     }
