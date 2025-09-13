@@ -1,15 +1,16 @@
 const {
     executeSlashCommandsWithOptions,
+    saveSettingsDebounced,
 } = SillyTavern.getContext();
 
 const COOLDOWN_MS = 2000;
 let lastPopulateTime = 0;
 
 import { extension_settings } from '../../../extensions.js';
+import { settings } from './settings.js';
 
 const extensionName = "swipes-list";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-const extensionSettings = extension_settings[extensionName];
 
 async function populateSwipeDropdown(target) {
     const select = $(target);
@@ -115,9 +116,21 @@ jQuery(async () => {
 
         $(document.body).on('change', '#swipes-list-select', function(e) { handleSwipeSelection(e.currentTarget); });
         $(document.body).on('click', '#swipes-list-select', function(e) { populateSwipeDropdown(e.currentTarget); });
-        $(document.body).on('change', '#checkbox-firstmes', function() { toggleSwipes(this.checked, 'first'); });
-        $(document.body).on('change', '#checkbox-lastmes', function() { toggleSwipes(this.checked, 'last'); });
-        $(document.body).on('change', '#checkbox-everymes', function() { toggleSwipes(this.checked, 'every'); });
+
+        $(document.body).on('change', '#checkbox-firstmes', function() { toggleSwipes(this.checked, 'first'); settings.showFirst = this.checked; saveSettingsDebounced(); });
+        $(document.body).on('change', '#checkbox-lastmes', function() { toggleSwipes(this.checked, 'last'); settings.showLast = this.checked; saveSettingsDebounced(); });
+        $(document.body).on('change', '#checkbox-everymes', function() { toggleSwipes(this.checked, 'every'); settings.showEvery = this.checked; saveSettingsDebounced(); });
+
+        toggleSwipes(settings.showFirst, 'first');
+        document.getElementById('checkbox-firstmes').checked = settings.showFirst;
+
+        toggleSwipes(settings.showLast, 'last');
+        document.getElementById('checkbox-lastmes').checked = settings.showLast;
+
+        toggleSwipes(settings.showEvery, 'every');
+        document.getElementById('checkbox-everymes').checked = settings.showEvery;
+
+
     } catch (error) {
         console.error('Error initializing Swipe List extension:', error);
     }
