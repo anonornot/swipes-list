@@ -2,26 +2,37 @@ const {
     executeSlashCommandsWithOptions,
 } = SillyTavern.getContext();
 
-const COOLDOWN_MS = 2000; // 2 seconds; adjust as needed
-let lastPopulateTime = 0; // Tracks the last successful execution time
+const COOLDOWN_MS = 2000;
+let lastPopulateTime = 0;
 
 import { extension_settings } from '../../../extensions.js';
 
 const extensionName = "swipes-list";
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
 const extensionSettings = extension_settings[extensionName];
-const defaultSettings = {};
 
-async function populateSwipeDropdown() {
+async function populateSwipeDropdown(target) {
+    const select = $(target);
     const now = Date.now();
     if (now - lastPopulateTime < COOLDOWN_MS) {
         console.log('Cooldown active, skipping populateSwipeDropdown');
         return;
     }
-    lastPopulateTime = now; // Update timestamp only if we proceed
+    lastPopulateTime = now;
+
+    const mes = select.closest('.mes');
+    if (!mes.length) {
+        console.error('Could not find parent .mes for swipe dropdown');
+        return;
+    }
+    const mesid = mes.attr('mesid');
+    if (!mesid) {
+        console.error('Could not retrieve mesid from parent .mes');
+        return;
+    }
 
     try {
-        const countResult = await executeSlashCommandsWithOptions('/swipes-count');
+        const countResult = await executeSlashCommandsWithOptions(`/swipes-count message=${mesid}`);
         const swipesCount = countResult.pipe;
         
         if (isNaN(swipesCount)) {
@@ -29,22 +40,20 @@ async function populateSwipeDropdown() {
             return;
         }
 
-        $('.last_mes #swipes-list-select').empty();
+        select.empty();
 
-        $('.last_mes #swipes-list-select').append($('<option>', {
+        select.append($('<option>', {
             value: -1,
             text: 'Select a swipe...'
         }));
-        
-        // Fetch each swipe and add to dropdown
+
         for (let i = 0; i < swipesCount; i++) {
-            const swipeResult = await executeSlashCommandsWithOptions(`/swipes-get ${i}`);
+            const swipeResult = await executeSlashCommandsWithOptions(`/swipes-get message=${mesid} ${i}`);
             const swipeText = swipeResult.pipe || swipeResult;
-            
-            // Get a suitable title from the swipe text
+
             let title = createSwipeTitle(swipeText);
             
-            $('.last_mes #swipes-list-select').append($('<option>', {
+            select.append($('<option>', {
                 value: i,
                 text: `${i+1}: ${title}`
             }));
@@ -72,21 +81,45 @@ function createSwipeTitle(text) {
     return truncated.trim() + '...';
 }
 
-function handleSwipeSelection() {
-    const selectedIndex = $('.last_mes #swipes-list-select').val();
+function handleSwipeSelection(target) {
+    const select = $(target);
+    const selectedIndex = select.val();
     if (selectedIndex >= 0) {
-        executeSlashCommandsWithOptions(`/swipes-go ${selectedIndex}`);
+        const mes = select.closest('.mes');
+        if (!mes.length) {
+            console.error('Could not find parent .mes for swipe selection');
+            return;
+        }
+        const mesid = mes.attr('mesid');
+        if (!mesid) {
+            console.error('Could not retrieve mesid from parent .mes');
+            return;
+        }
+        executeSlashCommandsWithOptions(`/swipes-go message=${mesid} ${selectedIndex}`);
     }
+}
+
+function toggleSwipes(checked, className) {
+    const container = $(`${className} #swipes-list-container`);
+    container.css('display', checked ? 'flex' : 'none');
+
+    const mes = $(`${className} .mes_text`);
+    mes.css('padding-bottom', checked ? '35px' : 'none');
 }
 
 jQuery(async () => {
     try {
-        const htmlTemplate = await $.get(`${extensionFolderPath}/index.html`);
-        $(".swipeRightBlock").append(htmlTemplate);
+        const index = await $.get(`${extensionFolderPath}/index.html`);
+        $(".swipeRightBlock").append(index);
 
-        $(document.body).on('change', '#swipes-list-select', handleSwipeSelection);
-        $(document.body).on('click', '#swipes-list-select', populateSwipeDropdown);
+        const swipeSettings = await $.get(`${extensionFolderPath}/swipeSettings.html`);
+        $('[name="themeToggles"]').prepend(swipeSettings);
 
+        $(document.body).on('change', '#swipes-list-select', function(e) { handleSwipeSelection(e.currentTarget); });
+        $(document.body).on('click', '#swipes-list-select', function(e) { populateSwipeDropdown(e.currentTarget); });
+        $(document.body).on('change', '#swipes-show-firstmes', function() { toggleSwipes(this.checked, '.mes[mesid="0"]'); });
+        $(document.body).on('change', '#swipes-show-lastmes', function() { toggleSwipes(this.checked, '.last_mes'); });
+        $(document.body).on('change', '#swipes-show-everymes', function() { toggleSwipes(this.checked, ''); });
     } catch (error) {
         console.error('Error initializing Swipe List extension:', error);
     }
