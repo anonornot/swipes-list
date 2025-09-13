@@ -6,7 +6,7 @@
     display: none;
     position: absolute;
     right: 50px;
-    top: 10px;
+    top: -5px;
     width: 200px;
 }
 
@@ -18,10 +18,10 @@
     width: 100%;
 }
 
-.last_mes #swipes-list-container {
+.mes[mesid="0"] #swipes-list-container {
     display: flex;
 }
 
-.last_mes .mes_text {
-    padding-bottom: 25px !important;
+.mes[mesid="0"] .mes_text {
+    padding-bottom: 35px !important;
 }
