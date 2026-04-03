@@ -11,10 +11,5 @@ ___
 
 [LaLib Extension](https://github.com/LenAnderson/SillyTavern-LALib)
 
-### Preview
-___
-
-![](https://files.catbox.moe/dr9osm.png)
-
 
 
