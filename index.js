@@ -109,7 +109,7 @@ function toggleSwipes(checked, className) {
 jQuery(async () => {
     try {
         const index = await $.get(`${extensionFolderPath}/index.html`);
-        $(".swipeRightBlock").append(index);
+        $(".mes").append(index);
 
         const swipeSettings = await $.get(`${extensionFolderPath}/swipeSettings.html`);
         $('[name="themeToggles"]').prepend(swipeSettings);
